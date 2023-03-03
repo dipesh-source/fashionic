@@ -1,31 +1,13 @@
+"""Admin.py for reguster model."""
 from django.contrib import admin
-
-# Register your models here.
 from django.contrib.auth.admin import UserAdmin
-from django.contrib import admin
-from django.contrib.auth.models import Group
-from django.contrib.auth import get_user_model
-from .models import CustomUser
-
-
-class CustomUserAdmin(UserAdmin):
-
-    from django.contrib.auth.admin import UserAdmin
-
-
-from django.contrib import admin
-from django.contrib.auth.models import Group
-from django.contrib.auth import get_user_model
 from .models import CustomUser
 from django.utils.translation import gettext_lazy as _
 
 
 class CustomUserAdmin(UserAdmin):
-    # The forms to add and change user instances
-    # form = UserChangeForm
-    # add_form = UserCreationForm
+    """Define admin model for custom User model with no username field."""
 
-    #    """Define admin model for custom User model with no username field."""
     fieldsets = (
         (None, {"fields": ("email", "username", "password")}),
         (
@@ -81,3 +63,13 @@ class CustomUserAdmin(UserAdmin):
 
 # Now register the new UserAdmin...
 admin.site.register(CustomUser, CustomUserAdmin)
+
+
+# @admin.register(OutstandingToken)
+# class OutstandingTokenAdmin(admin.ModelAdmin):
+#     list_display = ["id", "user", "jit", "token", "created_at", "expires_at"]
+
+
+# @admin.register(BlacklistedToken)
+# class BlacklistedTokenAdmin(admin.ModelAdmin):
+#     list_display = ["id", "token", "blacklisted_at"]

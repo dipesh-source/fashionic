@@ -1,6 +1,5 @@
-"""
-    settings file
-"""
+# flake8: noqa E501
+"""Settings file."""
 import os
 from pathlib import Path
 
@@ -18,6 +17,7 @@ SECRET_KEY = "django-insecure-of(nf+ke%_9i2$ly4-1s*b=*^v_juysw8j+e4yaqe4zzrp-5-g
 DEBUG = True
 
 ALLOWED_HOSTS = []
+# "192.168.0.108"
 
 
 # Application definition

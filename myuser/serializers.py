@@ -1,3 +1,4 @@
+"""Serializer file for convert into a Json."""
 from rest_framework import serializers
 from myuser.models import (
     Service,
@@ -12,14 +13,14 @@ from myuser.models import (
 
 
 class AppointmentSerializer(serializers.ModelSerializer):
-    """
-    create a serializer for the save appointment
-    """
+    """Create a serializer for the save appointment."""
 
     app_service = serializers.StringRelatedField(many=True, read_only=True)
     app_staff = serializers.StringRelatedField(many=True, read_only=True)
 
     class Meta:
+        """Nested class."""
+
         model = Appointment
         fields = [
             "id",
@@ -33,19 +34,15 @@ class AppointmentSerializer(serializers.ModelSerializer):
             "app_staff",
         ]
 
-    # def create(self, validated_data):
-    #     validated_data['user'] = self.context['request'].user
-    #     return Appointment.objects.create(**validated_data)
-
 
 class StaffSerializer(serializers.ModelSerializer):
-    """
-    create a staff modelserializer
-    """
+    """Create a staff modelserializer."""
 
-    staff_attendance = serializers.StringRelatedField(many=True, read_only=True)
+    staff_attendance = serializers.StringRelatedField(many=True, read_only=True)  # noqa: E501
 
     class Meta:
+        """Nested class."""
+
         model = Staff
         fields = [
             "id",
@@ -61,30 +58,21 @@ class StaffSerializer(serializers.ModelSerializer):
 
 
 class ServiceSerializer(serializers.ModelSerializer):
-    """
-    service model serializers
-    """
+    """Service model serializers."""
 
     class Meta:
+        """Nested class."""
+
         model = Service
         fields = ["id", "user", "name", "cost", "text"]
 
 
-class ProductSerializer(serializers.ModelSerializer):
-    """
-    product model serializer
-    """
-
-    class Meta:
-        model = ["id", "user", "img", "name", "price", "stock", "note"]
-
-
 class AttendanceSerializer(serializers.ModelSerializer):
-    """
-    have a attendance serializers
-    """
+    """Have a attendance serializers."""
 
     class Meta:
+        """Nested class."""
+
         model = Attendance
         fileds = [
             "id",
@@ -96,38 +84,44 @@ class AttendanceSerializer(serializers.ModelSerializer):
 
 
 class FeedbackSerializer(serializers.ModelSerializer):
-    """
-    feedback modelserializers
-    """
+    """Feedback modelserializers."""
 
     class Meta:
+        """Nested class."""
+
         model = Feedback
         fields = ["id", "user", "name", "phone", "feedback"]
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    """
-    create a product serializers
-    """
+    """Create a product serializers."""
+
+    product = serializers.StringRelatedField(many=True, read_only=True)
 
     class Meta:
+        """Nested class."""
+
         model = Product
         fields = ["id", "user", "img", "name", "price", "stock", "note"]
 
 
 class PurchaseSerializer(serializers.ModelSerializer):
-    """
-    create a purchase modelserializer
-    """
+    """Create a purchase modelserializer."""
 
     product = serializers.StringRelatedField(many=True, read_only=True)
 
     class Meta:
+        """Nested class."""
+
         model = Purchase
         fields = ["id", "user", "product", "name", "phone", "qty", "product"]
 
 
 class GallerySerializer(serializers.ModelSerializer):
+    """GallerySerializer."""
+
     class Meta:
+        """Nested class."""
+
         model = Gallery
         fields = ["id", "user", "name", "img", "file", "about"]

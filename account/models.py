@@ -1,17 +1,16 @@
+"""Model.py to desing the database."""
 from django.db import models
-from django.utils import timezone
 from django.contrib.auth.models import BaseUserManager, AbstractUser
 from django.utils.translation import gettext as _
 
 
 class CustomUserManager(BaseUserManager):
+    """CustomUserManager for a model."""
+
     def _create_user(
         self, email, username, password=None, password2=None, **extra_fields
     ):
-        """
-        Creates and saves a User with the given email, date of
-        birth and password.
-        """
+        """Create and saves a User with the given email, date of birth and password."""  # noqa: E501
         if not email:
             raise ValueError("Users must have an email address")
 
@@ -28,14 +27,13 @@ class CustomUserManager(BaseUserManager):
     def create_user(
         self, email, username, password=None, password2=None, **extra_fields
     ):
+        """Create a normal user."""
         extra_fields.setdefault("is_staff", False)
         extra_fields.setdefault("is_superuser", False)
         return self._create_user(email, username, password, **extra_fields)
 
     def create_superuser(self, email, username, password, **extra_fields):
-        """
-        Create and save a SuperUser with the given email and password.
-        """
+        """Create and save a SuperUser with the given email and password."""
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
         # extra_fields.setdefault('is_active', True)
@@ -49,6 +47,8 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractUser):
+    """Have create a custom user authentication."""
+
     logo = models.ImageField(upload_to="logo/", null=True, blank=True)
     email = models.EmailField(
         _("email address"),
@@ -70,6 +70,7 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS = ["username", "phone"]
 
     def __str__(self):
+        """Return a email while saving a data."""
         return self.email
 
     # def has_perm(self, perm, obj=None):

@@ -1,3 +1,4 @@
+"""Admin file to register a model."""
 from django.contrib import admin
 from .models import (
     Service,
@@ -13,6 +14,8 @@ from .models import (
 
 @admin.register(Appointment)
 class appointmentAdmin(admin.ModelAdmin):
+    """Register a appointmentAdmin."""
+
     list_display = [
         "id",
         "user",
@@ -27,6 +30,8 @@ class appointmentAdmin(admin.ModelAdmin):
 
 @admin.register(Service)
 class serviceAdmin(admin.ModelAdmin):
+    """Register a serviceAdmin."""
+
     list_display = [
         "id",
         "user",
@@ -39,6 +44,8 @@ class serviceAdmin(admin.ModelAdmin):
 
 @admin.register(Feedback)
 class feedbackAdmin(admin.ModelAdmin):
+    """Register a feedbackAdmin."""
+
     list_display = [
         "id",
         "user",
@@ -50,6 +57,8 @@ class feedbackAdmin(admin.ModelAdmin):
 
 @admin.register(Gallery)
 class galleryAdmin(admin.ModelAdmin):
+    """Register a galleryAdmin."""
+
     list_display = [
         "id",
         "name",
@@ -61,6 +70,8 @@ class galleryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class productAdmin(admin.ModelAdmin):
+    """Register a productAdmin."""
+
     list_display = [
         "id",
         "user",
@@ -74,6 +85,8 @@ class productAdmin(admin.ModelAdmin):
 
 @admin.register(Staff)
 class staffAdmin(admin.ModelAdmin):
+    """Register a staffAdmin."""
+
     list_display = [
         "id",
         "profile",
@@ -87,6 +100,8 @@ class staffAdmin(admin.ModelAdmin):
 
 @admin.register(Purchase)
 class purchaseAdmin(admin.ModelAdmin):
+    """Register a purchaseAdmin."""
+
     list_display = [
         "id",
         "user",
@@ -99,11 +114,6 @@ class purchaseAdmin(admin.ModelAdmin):
 
 @admin.register(Attendance)
 class attedanceaAdmin(admin.ModelAdmin):
-    list_display = [
-        "id",
-        "in_date",
-        "in_time",
-        "out_date",
-        "out_time",
-        "check_out",
-    ]
+    """Register a attedanceaAdmin."""
+
+    list_display = ["id", "staff", "date", "is_present"]

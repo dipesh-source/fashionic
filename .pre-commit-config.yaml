@@ -18,7 +18,7 @@ repos:
       rev: v1.4
       hooks:
       - id: autoflake
-        args: [--in-place, --remove-unused-variables, --remove-unused-arguments]
+        args: [--in-place, --remove-unused-variables]
 # repos:
 #   - repo: https://github.com/pre-commit/mirrors-isort
 #     rev: v5.9.1

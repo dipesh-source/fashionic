@@ -1,4 +1,4 @@
-"""Model.py to desing the database."""
+"""Model.py to design the database."""
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractUser
 from django.utils.translation import gettext as _

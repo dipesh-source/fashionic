@@ -25,10 +25,9 @@ class RegistrationViewSet(views.APIView):
         """Post request for the user."""
         serializer = serializers.UserRegistrationSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            user = serializer.save()
-            token = get_tokens_for_user(user)
+            serializer.save()
             return Response(
-                {"token": token, "data": "user registered"},
+                {"data": "User Registered Successfully "},
                 status=status.HTTP_201_CREATED,
             )
         return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)

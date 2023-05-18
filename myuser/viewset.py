@@ -13,6 +13,7 @@ from .serializers import (
     AppointmentSerializer,
     StaffSerializer,
     ServiceSerializer,
+    AppointmentDaySerializer,
 )  # noqa: E501
 from account.models import CustomUser
 from myuser.models import Staff, Appointment, Service
@@ -37,18 +38,48 @@ class AppointmentViewset(viewsets.ModelViewSet):
             user
         )  # noqa: E501
 
+    def create(self, request, *args, **kwargs):
+        """Override create method."""
+        serializer = AppointmentSerializer(
+            data=request.data, context={"request": request}
+        )
+        if serializer.is_valid(raise_exception=True):
+            services = request.data.get(
+                "service", []
+            )  # get the list of services from the request data
+            appointment = serializer.save()
+            appointment.service.set(services)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(
+            {"error": "something went wrong"},
+            status=status.HTTP_400_BAD_REQUEST,  # noqa: E501
+        )
+
     @action(detail=False, methods=["GET"])
-    def today_appointment(self):
+    def days_appointment(self, request, pk=None):
         """Return all today appointment data."""
         user = self.request.user
-        queryset = Appointment.objectsAppointment.today_appointment(user)  # noqa: E501
-        print("Queryset", queryset)
-        if not queryset.exists():
-            return Response(
-                {"Error": "Today appointment not found"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        serializer = AppointmentSerializer(queryset, many=True)
+        data = request.query_params.get("day", None)
+        if data == "today":
+            queryset = Appointment.objectsAppointment.today_appointment(
+                user
+            )  # noqa: E501
+            if not queryset.exists():
+                return Response(
+                    {"Error": "Today appointment not found"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            serializer = AppointmentDaySerializer(queryset, many=True)
+        elif data == "tomorrow":
+            queryset = Appointment.objectsAppointment.tomorrow_appointment(
+                user
+            )  # noqa: E501
+            if not queryset.exists():
+                return Response(
+                    {"Error": "Tomorrow appointment not found"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            serializer = AppointmentDaySerializer(queryset, many=True)
         return Response(
             {"today-appointment": serializer.data},
             status=status.HTTP_200_OK,  # noqa: E501
@@ -72,6 +103,25 @@ class AppointmentViewset(viewsets.ModelViewSet):
             status=status.HTTP_200_OK,  # noqa: E501
         )
 
+    @action(detail=False, methods=["GET"])
+    def hours(self, request):
+        """Handle future hour and after next 1 hour appointment."""
+        user = self.request.user
+        params = request.query_params.get("hour", None)
+        queryset = Appointment.objectsAppointment.after_hours(user, params)
+        if not queryset.exists():
+            return Response(
+                {"Error": "Hour's appointment not found"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        serializer = AppointmentSerializer(
+            queryset, many=True, context={"request": request}
+        )
+        return Response(
+            {"hours-appointment": serializer.data},
+            status=status.HTTP_200_OK,  # noqa: E501
+        )
+
 
 class StaffViewset(viewsets.ModelViewSet):
     """StaffViewset API."""
@@ -81,9 +131,10 @@ class StaffViewset(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
-    def get_queryset(self, request):
+    def get_queryset(self):
         """Get queryset for a StaffViewset."""
-        return Staff.objectStaff.get_staff(user=request.user)
+        user = self.request.user
+        return Staff.objectStaff.get_staff(user)
 
 
 class ServiceViewset(viewsets.ModelViewSet):

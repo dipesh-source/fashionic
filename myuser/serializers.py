@@ -12,11 +12,46 @@ from myuser.models import (
 )
 
 
+class AppointmentDaySerializer(serializers.ModelSerializer):
+    """Get today, tomorrow and specific day serializer."""
+
+    # TODO: might we can use common AppointmentSerializer for both.
+    service = serializers.StringRelatedField(many=True, read_only=True)
+    provided = serializers.StringRelatedField(read_only=True)
+
+    class Meta:
+        """Meta django class."""
+
+        model = Appointment
+        fields = [
+            "id",
+            "user",
+            "name",
+            "surname",
+            "phone",
+            "app_date",
+            "app_time",
+            "service",
+            "provided",
+        ]
+
+
 class AppointmentSerializer(serializers.ModelSerializer):
     """Create a serializer for the save appointment."""
 
-    app_service = serializers.StringRelatedField(many=True, read_only=True)
-    app_staff = serializers.StringRelatedField(many=True, read_only=True)
+    service = serializers.StringRelatedField(many=True, read_only=True)
+    provided = serializers.PrimaryKeyRelatedField(
+        queryset=Staff.objects.none(), required=True
+    )
+
+    def __init__(self, *args, **kwargs):
+        """Handle to get current object of staff."""
+        super().__init__(*args, **kwargs)
+        self.fields["provided"].queryset = Staff.objects.filter(
+            user=self.context["request"].user
+        )
+        print(self.context["request"])
+        print(self.context["request"].user)
 
     class Meta:
         """Nested class."""
@@ -30,15 +65,18 @@ class AppointmentSerializer(serializers.ModelSerializer):
             "phone",
             "app_date",
             "app_time",
-            "app_service",
-            "app_staff",
+            "service",
+            "provided",
         ]
 
 
 class StaffSerializer(serializers.ModelSerializer):
     """Create a staff modelserializer."""
 
-    staff_attendance = serializers.StringRelatedField(many=True, read_only=True)  # noqa: E501
+    app_staff = serializers.StringRelatedField(many=True, read_only=True)
+    staff_attendance = serializers.StringRelatedField(
+        many=True, read_only=True
+    )  # noqa: E501
 
     class Meta:
         """Nested class."""
@@ -54,6 +92,7 @@ class StaffSerializer(serializers.ModelSerializer):
             "email",
             "specialization",
             "staff_attendance",
+            "app_staff",
         ]
 
 
@@ -102,7 +141,16 @@ class ProductSerializer(serializers.ModelSerializer):
         """Nested class."""
 
         model = Product
-        fields = ["id", "user", "img", "name", "price", "stock", "note"]
+        fields = [
+            "id",
+            "user",
+            "img",
+            "name",
+            "price",
+            "stock",
+            "note",
+            "product",
+        ]  # noqa: E501
 
 
 class PurchaseSerializer(serializers.ModelSerializer):

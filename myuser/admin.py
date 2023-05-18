@@ -26,6 +26,25 @@ class appointmentAdmin(admin.ModelAdmin):
         "app_time",
         "provided",
     ]
+    list_display = (
+        "user",
+        "name",
+        "surname",
+        "phone",
+        "app_date",
+        "app_time",
+        "provided",
+    )
+    list_filter = (
+        "user",
+        "name",
+        "surname",
+        "phone",
+        "app_date",
+        "app_time",
+        "provided",
+    )
+    search_fields = ["name", "surname", "phone"]
 
 
 @admin.register(Service)

@@ -3,7 +3,7 @@
 """Design a database relationship for system."""
 from django.db import models
 from django.conf import settings
-from .managers import (
+from myuser.managers import (
     AppointmentManager,
     ServiceManager,
     StaffManager,
@@ -226,7 +226,7 @@ class Gallery(Common):
 
 
 class Attendance(Common):
-    """It will take a attedance for a whole staff of the salon."""
+    """It will take a attendance for a whole staff of the salon."""
 
     user = models.ForeignKey(
         User,

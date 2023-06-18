@@ -25,16 +25,10 @@ class appointmentAdmin(admin.ModelAdmin):
         "app_date",
         "app_time",
         "provided",
+        "created_at",
+        "updated_at",
     ]
-    list_display = (
-        "user",
-        "name",
-        "surname",
-        "phone",
-        "app_date",
-        "app_time",
-        "provided",
-    )
+
     list_filter = (
         "user",
         "name",
@@ -58,6 +52,8 @@ class serviceAdmin(admin.ModelAdmin):
         "name",
         "cost",
         "text",
+        "created_at",
+        "updated_at",
     ]
 
 
@@ -71,6 +67,8 @@ class feedbackAdmin(admin.ModelAdmin):
         "name",
         "phone",
         "feedback",
+        "created_at",
+        "updated_at",
     ]
 
 
@@ -84,7 +82,9 @@ class galleryAdmin(admin.ModelAdmin):
         "img",
         "file",
         "about",
-    ]
+        "created_at",
+        "updated_at",
+    ]  # noqa:E501
 
 
 @admin.register(Product)
@@ -99,6 +99,8 @@ class productAdmin(admin.ModelAdmin):
         "price",
         "stock",
         "note",
+        "created_at",
+        "updated_at",
     ]
 
 
@@ -114,6 +116,8 @@ class staffAdmin(admin.ModelAdmin):
         "phone",
         "email",
         "specialization",
+        "created_at",
+        "updated_at",
     ]
 
 
@@ -128,6 +132,8 @@ class purchaseAdmin(admin.ModelAdmin):
         "name",
         "phone",
         "qty",
+        "created_at",
+        "updated_at",
     ]
 
 
@@ -135,4 +141,11 @@ class purchaseAdmin(admin.ModelAdmin):
 class attedanceaAdmin(admin.ModelAdmin):
     """Register a attedanceaAdmin."""
 
-    list_display = ["id", "staff", "date", "is_present"]
+    list_display = [
+        "id",
+        "staff",
+        "date",
+        "is_present",
+        "created_at",
+        "updated_at",
+    ]  # noqa:E501

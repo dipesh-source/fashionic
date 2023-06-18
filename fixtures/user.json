@@ -1,0 +1,172 @@
+[
+    {
+        "model": "account.customuser",
+        "pk": 1,
+        "fields": {
+            "logo": null,
+            "email": "mic@example.com",
+            "username": "mic-salon",
+            "phone": "1904567890",
+            "address": "Address 1",
+            "start_date": null,
+            "end_date": null,
+            "first_name": "Mic",
+            "last_name": "ceram",
+            "is_active": true,
+            "is_admin": false
+        }
+    },
+    {
+        "model": "account.customuser",
+        "pk": 2,
+        "fields": {
+            "logo": null,
+            "email": "john@example.com",
+            "username": "john-salon",
+            "phone": "9876524210",
+            "address": "Address 2",
+            "start_date": null,
+            "end_date": null,
+            "first_name": "john",
+            "last_name": "ali",
+            "is_active": true,
+            "is_admin": false
+        }
+    },
+    {
+        "model": "account.customuser",
+        "pk": 3,
+        "fields": {
+            "logo": null,
+            "email": "smith@example.com",
+            "username": "smith-salon",
+            "phone": "9876543212",
+            "address": "Address 3",
+            "start_date": null,
+            "end_date": null,
+            "first_name": "Smith",
+            "last_name": "devin",
+            "is_active": true,
+            "is_admin": false
+        }
+    },
+    {
+        "model": "account.customuser",
+        "pk": 4,
+        "fields": {
+            "logo": null,
+            "email": "paul@example.com",
+            "username": "paul-salon",
+            "phone": "9876543221",
+            "address": "Address 4",
+            "start_date": null,
+            "end_date": null,
+            "first_name": "Paul",
+            "last_name": "nail",
+            "is_active": true,
+            "is_admin": false
+        }
+    },
+    {
+        "model": "account.customuser",
+        "pk": 5,
+        "fields": {
+            "logo": null,
+            "email": "herry@example.com",
+            "username": "herry-salon",
+            "phone": "9876543900",
+            "address": "Address 5",
+            "start_date": null,
+            "end_date": null,
+            "first_name": "Herry",
+            "last_name": "Cop",
+            "is_active": true,
+            "is_admin": false
+        }
+    },
+    {
+        "model": "account.customuser",
+        "pk": 6,
+        "fields": {
+            "logo": null,
+            "email": "booker@example.com",
+            "username": "booker-salon",
+            "phone": "1904677790",
+            "address": "Address 6",
+            "start_date": null,
+            "end_date": null,
+            "first_name": "Booker",
+            "last_name": "roy",
+            "is_active": true,
+            "is_admin": false
+        }
+    },
+    {
+        "model": "account.customuser",
+        "pk": 7,
+        "fields": {
+            "logo": null,
+            "email": "json@example.com",
+            "username": "Json-salon",
+            "phone": "98737724210",
+            "address": "Address 7",
+            "start_date": null,
+            "end_date": null,
+            "first_name": "Json",
+            "last_name": "Roy",
+            "is_active": true,
+            "is_admin": false
+        }
+    },
+    {
+        "model": "account.customuser",
+        "pk": 8,
+        "fields": {
+            "logo": null,
+            "email": "jimmy@example.com",
+            "username": "Jimmy-salon",
+            "phone": "9876243212",
+            "address": "Address 8",
+            "start_date": null,
+            "end_date": null,
+            "first_name": "Jimmy",
+            "last_name": "Andorson",
+            "is_active": true,
+            "is_admin": false
+        }
+    },
+    {
+        "model": "account.customuser",
+        "pk": 9,
+        "fields": {
+            "logo": null,
+            "email": "adam@example.com",
+            "username": "adam-salon",
+            "phone": "9876549821",
+            "address": "Address 9",
+            "start_date": null,
+            "end_date": null,
+            "first_name": "Adam",
+            "last_name": "Zampa",
+            "is_active": true,
+            "is_admin": false
+        }
+    },
+    {
+        "model": "account.customuser",
+        "pk": 10,
+        "fields": {
+            "logo": null,
+            "email": "stive@example.com",
+            "username": "stive-salon",
+            "phone": "9813543900",
+            "address": "Address 10",
+            "start_date": null,
+            "end_date": null,
+            "first_name": "Stive",
+            "last_name": "marry",
+            "is_active": true,
+            "is_admin": false
+        }
+    }
+]

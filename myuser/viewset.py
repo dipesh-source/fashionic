@@ -6,6 +6,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 # App
@@ -14,11 +15,22 @@ from .serializers import (
     StaffSerializer,
     ServiceSerializer,
     AppointmentDaySerializer,
+    FeedbackSerializer,
+    ProductSerializer,
+    PurchaseSerializer,
 )  # noqa: E501
 from account.models import CustomUser
-from myuser.models import Staff, Appointment, Service
+from myuser.models import (
+    Staff,
+    Appointment,
+    Service,
+    Feedback,
+    Product,
+    Purchase,
+)  # noqa: E501
 
 # Django
+# from django_filters.rest_framework import DjangoFilterBackend
 
 User = CustomUser
 
@@ -30,6 +42,11 @@ class AppointmentViewset(viewsets.ModelViewSet):
     queryset = Appointment.objects.all()
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
+    filter_backends = (
+        SearchFilter,
+        OrderingFilter,
+        # DjangoFilterBackend,
+    )
 
     def get_queryset(self):
         """Override appointment query."""
@@ -86,24 +103,6 @@ class AppointmentViewset(viewsets.ModelViewSet):
         )
 
     @action(detail=False, methods=["GET"])
-    def tomorrow_appointment(self):
-        """Return all tomorrow appointment data."""
-        user = self.request.user
-        queryset = Appointment.objectsAppointment.tomorrow_appointment(
-            user
-        )  # noqa: E501
-        if not queryset.exists():
-            return Response(
-                {"Error": "Tomorrow appointment not found"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        serializer = AppointmentSerializer(queryset, many=True)
-        return Response(
-            {"tomorrow-appointment": serializer.data},
-            status=status.HTTP_200_OK,  # noqa: E501
-        )
-
-    @action(detail=False, methods=["GET"])
     def hours(self, request):
         """Handle future hour and after next 1 hour appointment."""
         user = self.request.user
@@ -154,13 +153,60 @@ class ServiceViewset(viewsets.ModelViewSet):
     def search_services(self, request, pk=None):
         """Add query params for search services."""
         user = self.request.user
-
+        # TODO: I have to learn self.get_queryset
+        testing = self.get_queryset()
+        print("Base Queryset from Testing", testing)
         data = request.query_params.get("services", None)
         if data is None:
             return Response(
                 {"Error": "Searched data not found"},
                 status=status.HTTP_400_BAD_REQUEST,  # noqa: E501
             )
+        new_query = self.get_serializer()
+        test = self.get_serializer_class()
+        print("Get serializer class", new_query, test)
         query = Service.objectsService.search_service(user, data)
         serializer = ServiceSerializer(query, many=True)
         return Response({"data": serializer.data}, status=status.HTTP_200_OK)
+
+
+class FeedbackViewset(viewsets.ModelViewSet):
+    """Feedback api of all users."""
+
+    serializer_class = FeedbackSerializer
+    queryset = Feedback.objects.all()
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    def get_queryset(self):
+        """Override queryset to get logged in user."""
+        user = self.request.user
+        return Feedback.objectsFeedback.get_feedback(user)
+
+
+class ProductViewset(viewsets.ModelViewSet):
+    """Product API viewset."""
+
+    serializer_class = ProductSerializer
+    queryset = Product.objects.all()
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    def get_queryset(self):
+        """Override the queryset for product."""
+        user = self.request.user
+        return Product.objectsProduct.get_product(user)
+
+
+class PurchaseViewset(viewsets.ModelViewSet):
+    """Purchase API viewset."""
+
+    serializer_class = PurchaseSerializer
+    queryset = Purchase.objects.all()
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        """Override the get_queryset."""
+        user = self.request.user
+        return Purchase.objectsPurchase.get_purchase(user)

@@ -100,12 +100,12 @@ class StaffManager(models.Manager):
 class FeedbackManager(models.Manager):
     """Will handle the feedback custom manager."""
 
-    def get_feedback(user):
+    def get_feedback(self, user):
         """Get all logged in feedback."""
         return super().get_queryset().filter(user=user)
 
     # TODO: replace with Django search.
-    def search_feedback(user, name, phone, feedback):
+    def search_feedback(self, user, name, phone, feedback):
         """Search feedback."""
         return (
             super()
@@ -129,7 +129,7 @@ class ProductManager(models.Manager):
             .get_queryset()
             .filter(user=user)
             .order_by("id")
-            .reverse()[:7]  # noqa: E501
+            .reverse()  # noqa: E501
         )
 
     # TODO: replace with django backend search.
@@ -150,12 +150,12 @@ class ProductManager(models.Manager):
 class PurchaseManager(models.Manager):
     """Will render all the required customer purchases data to user."""
 
-    def get_purchase(user):
+    def get_purchase(self, user):
         """Get all purchase of logged in users."""
         return super().get_queryset().filter(user=user)
 
     # TODO: replace with django backend search.
-    def search_purchase(user, product, qty):
+    def search_purchase(self, user, product, qty):
         """Search any purchase."""
         return (
             super()
@@ -163,7 +163,7 @@ class PurchaseManager(models.Manager):
             .filter(Q(user=user) & Q(product=product) | Q(qty=qty))
         )
 
-    def search_who(user, name, phone):
+    def search_who(self, user, name, phone):
         """Search purchased user."""
         return (
             super()
@@ -175,12 +175,12 @@ class PurchaseManager(models.Manager):
 class GalleryManager(models.Manager):
     """Custom gallery model manager."""
 
-    def get_gallery(user):
+    def get_gallery(self, user):
         """Get all logged in user gallery."""
         return super().get_queryset().filter(user=user)
 
     # TODO: replace with django backend search.
-    def search_gallery(user, name, about):
+    def search_gallery(self, user, name, about):
         """Search galley items."""
         return (
             super()
@@ -192,12 +192,12 @@ class GalleryManager(models.Manager):
 class AttendanceManager(models.Manager):
     """For a attendance queryset."""
 
-    def get_attendance(user):
+    def get_attendance(self, user):
         """Get all logged in user attendance."""
         return super().get_queryset().filter(user=user)
 
     # TODO: replace with django backend search.
-    def search_in_attendance(user, in_date, in_time):
+    def search_in_attendance(self, user, in_date, in_time):
         """Search in attendance."""
         return (
             super()
@@ -206,7 +206,7 @@ class AttendanceManager(models.Manager):
         )
 
     # TODO: replace with django backend search.
-    def search_out_attendance(user, out_date, out_time):
+    def search_out_attendance(self, user, out_date, out_time):
         """Search out attendance."""
         return (
             super()

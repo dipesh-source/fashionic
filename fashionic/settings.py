@@ -16,7 +16,7 @@ SECRET_KEY = "django-insecure-of(nf+ke%_9i2$ly4-1s*b=*^v_juysw8j+e4yaqe4zzrp-5-g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 # "192.168.0.108"
 
 
@@ -24,6 +24,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "debug_toolbar",
+    # 'jazzmin',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -31,6 +32,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework_simplejwt",
+    "django_celery_beat",
     "rest_framework",
     "account",
     "myuser",
@@ -158,3 +160,56 @@ MEDIA_URL = "/media/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "account.CustomUser"
+
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "parmardipesh2002@gmail.com"
+EMAIL_HOST_PASSWORD = "kkunlhukpfxyrcvr"
+SERVER_EMAIL = "parmardipesh2002@gmail.com"
+DEFAULT_FROM_EMAIL = "parmardipesh2002@gmail.com"
+
+
+# Celery Configuration
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+CELERY_BROKER_URL = "redis://127.0.0.1:6379"
+CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TASK_SERIALIZER = "json"
+CELERY_TIMEZONE = "UTC"
+
+
+# CELERY_TASK_TRACK_STARTED = True
+# CELERY_TASK_TIME_LIMIT = 30 * 60
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            "filename": "debug.log",
+        },
+    },
+    "root": {
+        "handlers": ["console", "file"],
+        "level": "INFO",  # Adjust the level as needed
+    },
+}

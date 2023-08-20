@@ -13,7 +13,7 @@ fake = Faker()
 ist = pytz.timezone("Asia/Kolkata")
 
 
-num_fixtures = 50
+num_fixtures = 250
 appointment_data = []
 staff_data = []
 service_data = []

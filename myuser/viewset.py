@@ -18,6 +18,8 @@ from .serializers import (
     FeedbackSerializer,
     ProductSerializer,
     PurchaseSerializer,
+    GallerySerializer,
+    AttendanceSerializer,
 )  # noqa: E501
 from account.models import CustomUser
 from myuser.models import (
@@ -27,6 +29,8 @@ from myuser.models import (
     Feedback,
     Product,
     Purchase,
+    Gallery,
+    Attendance,
 )  # noqa: E501
 
 # Django
@@ -210,3 +214,32 @@ class PurchaseViewset(viewsets.ModelViewSet):
         """Override the get_queryset."""
         user = self.request.user
         return Purchase.objectsPurchase.get_purchase(user)
+
+
+class GalleryViewset(viewsets.ModelViewSet):
+    """Gallery API viewset."""
+
+    serializer_class = GallerySerializer
+    queryset = Gallery.objects.all()
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        """Override the get_queryset."""
+        user = self.request.user
+        return Gallery.objectsGallery.get_gallery(user)
+
+
+class AttendanceViewset(viewsets.ModelViewSet):
+    """attendance API viewswt."""
+
+    serializer_class = AttendanceSerializer
+    queryset = Attendance.objects.all()
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        """Override the get_queryset."""
+        super().get_queryset()
+        user = self.request.user
+        return Attendance.objectsAttendance.get_attendance(user)
